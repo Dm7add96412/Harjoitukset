@@ -17,9 +17,10 @@ const Part = (props) => {
 const Content = (props) => {
   return (
     <>
-      <Part oh={osa1} har={harkka1} />
-      <Part oh={osa2} har={harkka2} />
-      <Part oh={osa3} har={harkka3} />
+      <Part oh={props.osat1[0].name} har={props.osat1[0].exercises} />
+      <Part oh={props.osat1[1].name} har={props.osat1[1].exercises} />
+      <Part oh={props.osat1[2].name} har={props.osat1[2].exercises} />
+
     </>
   )
 }
@@ -27,25 +28,33 @@ const Content = (props) => {
 const Total = (props) => {
   return (
     <>
-      <p>Number of exercises {props.e1 + props.e2 + props.e3}</p>
+      <p>Number of exercises {props.osat2[0].exercises + props.osat2[1].exercises + props.osat2[2].exercises}</p>
     </>
   )
 }
 
 const App = () => {
   const course = 'Half Stack application development'
-  const part1 = 'Fundamentals of React'
-  const exercises1 = 10
-  const part2 = 'Using props to pass data'
-  const exercises2 = 7
-  const part3 = 'State of a component'
-  const exercises3 = 14
+  const parts = [
+    {
+      name: 'Fundamentals of React',
+      exercises: 10
+    },
+    {
+      name: 'Using props to pass data',
+      exercises: 7
+    },
+    {
+      name: 'State of a component',
+      exercises: 14
+    }
+  ]
 
   return (
     <div>
       <Header kurssi={course} />
-      <Content osa1={part1} harkka1={exercises1} osa2={part2} harkka2={exercises2} osa3={part3} harkka3={exercises3} />
-      <Total e1={exercises1} e2={exercises2} e3={exercises3} />
+      <Content osat1={parts} />
+      <Total osat2={parts} />
     </div>
   )
 }
