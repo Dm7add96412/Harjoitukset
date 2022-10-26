@@ -1,3 +1,3 @@
 
-Full Stack -kurssin tehtävät
+Full Stack -course exercises
 
