@@ -12,6 +12,54 @@ const Randomizer = (min, max) => {
   )
 }
 
+const Header = (props) => {
+  return(
+    <>
+      <h1>{props.h}</h1>
+    </>
+  )
+}
+
+/*
+const MostVotes = (v) => {
+  if (length(v) === 0) {
+    return(
+      <>
+
+      </>
+    )
+  }
+  return(
+    <>
+      for (i in v) {
+
+      }
+    </>
+  )
+}
+*/
+
+const Content = (props) => {
+  if (props.counting === 0) {
+    return (
+      <>
+        {props.anecdote}
+        <br></br>
+        No votes yet!
+        <br></br>
+      </>
+    )
+  }
+  return (
+    <>
+      {props.anecdote} 
+      <br></br>
+      has {props.counting} votes
+      <br></br>
+    </>
+  )
+}
+
 const App = () => {
   const anecdotes = [
     'If it hurts, do it more often.',
@@ -23,37 +71,35 @@ const App = () => {
     'Programming without an extremely heavy use of console.log is same as if a doctor would refuse to use x-rays or blood tests when dianosing patients.'
   ]
 
-  const votes = new Uint8Array(7)
-   
   const [selected, setSelected] = useState(0)
-  const [voted, setVote] = useState(0)
+  const [voted, setVote] = useState(new Uint8Array(7))
+
+  const headers = {
+    header1: 'Anecdote of the day',
+    header2: 'Anecdote with most votes'
+  }
 
   const setToValue = newValue => {
     newValue = Randomizer(0, 6)
-    console.log('next anecdote', newValue)
+    console.log('next anecdote', (newValue + 1))
     setSelected(newValue)
   }
 
   const setToVote = newValue => {
-    if (votes.every(item => item === 0)) {
-      var copy = [...votes]
-      copy[selected] += 1
-      setVote(newValue)
-      console.log(copy)
-    }
-    else {
+    var copy = [...newValue]
     copy[selected] += 1
-    setVote(newValue)
-    console.log(copy)
-    }
+    console.log('votes', copy)
+    setVote(copy)
   }
 
   return (
     <div>
-      <>{anecdotes[selected]}</>
-      <p></p>
+      <Header h={headers.header1} />
+      <Content counting={voted[selected]} anecdote={anecdotes[selected]} />
       <Button handleClick={() => setToValue(selected)} text="next anecdote" />
       <Button handleClick={() => setToVote(voted)} text="vote" />
+      <Header h={headers.header2} />
+      <MostVotes v={voted} />
 
     </div>
   )
