@@ -20,20 +20,56 @@ const Header = (props) => {
   )
 }
 
-/*
-const MostVotes = (v) => {
-  if (length(v) === 0) {
+const theVotes = (voted) => {
+  return(
+    Math.max(...voted)
+  )
+}
+
+const theIndex = (voted, mvoted) => {
+  return(
+    voted.indexOf(mvoted)
+  )
+}
+
+const MostVotes = (props) => {
+  const most = theVotes(props.v)
+  const index = theIndex(props.v, most)
+
+  if (props.v.length === 0) {
     return(
       <>
-
+        No votes yet
       </>
     )
   }
   return(
     <>
-      for (i in v) {
+      {props.anecdote[index]}
+      <br></br>
+      has {most} votes
+    </>
 
-      }
+  )
+}
+
+/*
+const MostVotes = (v) => {
+  const most = -1
+  if (length(v) === 0) {
+    return(
+      <>
+        <> </>
+      </>
+    )
+  }
+  return(
+    <>
+      v.forEach(element => {
+        if (element > most) {
+          most = element          
+        }
+      })
     </>
   )
 }
@@ -99,7 +135,7 @@ const App = () => {
       <Button handleClick={() => setToValue(selected)} text="next anecdote" />
       <Button handleClick={() => setToVote(voted)} text="vote" />
       <Header h={headers.header2} />
-      <MostVotes v={voted} />
+      <MostVotes v={voted} anecdote={anecdotes} />
 
     </div>
   )
