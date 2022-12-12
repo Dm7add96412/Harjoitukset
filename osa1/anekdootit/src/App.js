@@ -53,28 +53,6 @@ const MostVotes = (props) => {
   )
 }
 
-/*
-const MostVotes = (v) => {
-  const most = -1
-  if (length(v) === 0) {
-    return(
-      <>
-        <> </>
-      </>
-    )
-  }
-  return(
-    <>
-      v.forEach(element => {
-        if (element > most) {
-          most = element          
-        }
-      })
-    </>
-  )
-}
-*/
-
 const Content = (props) => {
   if (props.counting === 0) {
     return (
