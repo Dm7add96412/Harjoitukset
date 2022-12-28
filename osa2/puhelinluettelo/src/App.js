@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react'
-import axios from 'axios'
 import personService from './services/persons'
 import Components from './components/Components'
 import Notification from './components/Notification'
@@ -13,11 +12,11 @@ const App = () => {
   const [newError, setNewError] = useState(false)
 
   useEffect(() => {
-    axios
-      .get('http://localhost:3001/persons')
-      .then(response => {
-        console.log(response.data)
-        setPersons(response.data)
+    personService
+      .getAll()
+        .then(response => {
+        console.log(response)
+        setPersons(response)
       })
   }, [])
 

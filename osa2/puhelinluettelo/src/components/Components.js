@@ -9,13 +9,17 @@ const Filter = ({filtering, filterChange}) => {
   }
 
 const Persons = ({numbers, remove}) => {
+    if (numbers) {
     return(
       <>
         {numbers.map(person =>
         <Phonebook key={person.name} person={person} remove={remove} />
         )}
       </>
-    )
+    )} else {
+      console.log("Could not get numbers")
+//      console.log(numbers)
+    }
   }
   
 const PersonForm = ({name, nameValue, numberValue,
