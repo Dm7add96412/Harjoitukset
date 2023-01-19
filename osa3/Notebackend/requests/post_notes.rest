@@ -1,8 +1,8 @@
-POST http://localhost:8080/api/notes
+PUT http://localhost:8080/api/notes/63c336409f9f975f54b605e2
 Content-Type: application/json
 
 {
-    "content": "Toimiikohan",
+    "content": "HTML is fun for sure",
     "important": true
 }
 
