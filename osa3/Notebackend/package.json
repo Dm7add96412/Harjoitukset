@@ -10,7 +10,8 @@
     "build:ui": "del /q build && cd ../../osa2/frontend/ && npm run build && xcopy build ../../osa3/Notebackend/ /E/H",
     "deploy": "fly deploy",
     "deploy:full": "npm run build:ui && npm run deploy",
-    "logs:prod": "fly logs"
+    "logs:prod": "fly logs",
+    "lint": "eslint ."
   },
   "author": "Juha Haipus",
   "license": "ISC",
@@ -21,6 +22,7 @@
     "mongoose": "^6.8.3"
   },
   "devDependencies": {
+    "eslint": "^8.32.0",
     "nodemon": "^2.0.20"
   }
 }

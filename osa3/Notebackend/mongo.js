@@ -20,7 +20,7 @@ const noteSchema = new mongoose.Schema({
 
 const Note = mongoose.model('Note', noteSchema)
 
-Note.find({important: true}).then(result => {
+Note.find({ important: true }).then(result => {
   result.forEach(note => {
     console.log(note)
   })
@@ -31,7 +31,7 @@ Note.find({important: true}).then(result => {
   content: 'Course material is good!',
   date: new Date(),
   important: true,
-}) 
+})
 
 note.save().then(result => {
   console.log('note saved!')
