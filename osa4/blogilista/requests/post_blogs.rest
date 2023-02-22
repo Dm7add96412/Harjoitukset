@@ -1,0 +1,8 @@
+POST http://localhost:8080/api/blogs
+Content-Type: application/json
+
+{
+    "title": "HTML is fun for sure?",
+    "author": "Jaska Jokunen2",
+    "url": "www.jeejee1.com"
+}
