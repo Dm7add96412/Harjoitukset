@@ -3,7 +3,8 @@ module.exports = {
     'browser': true,
     'commonjs': true,
     'es2021': true,
-    'node': true
+    'node': true,
+    'jest': true
   },
   'extends': 'eslint:recommended',
   'overrides': [
@@ -13,8 +14,7 @@ module.exports = {
   },
   'rules': {
     'indent': [
-      'error',
-			 2
+      'error',2
     ],
     'linebreak-style': [
       'error',
@@ -26,12 +26,12 @@ module.exports = {
     ],
     'eqeqeq': 'error',
     'no-trailing-spaces': 'error',
-    	'object-curly-spacing': [
+    'object-curly-spacing': [
       'error', 'always'
-    	],
-    	'arrow-spacing': [
+    ],
+    'arrow-spacing': [
       'error', { 'before': true, 'after': true }
-    	],
+    ],
     'semi': [
       'error',
       'never'
