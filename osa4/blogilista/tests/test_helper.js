@@ -64,8 +64,33 @@ const initialBlogs = [
     }
   ]
 
+  const newBlog = {
+    title: 'this is a new blog',
+    author: 'Villi Wäinö',
+    url: 'www.newblog.com'
+  }
+
+  const noTitle = {
+    author: 'Villi Wäinö',
+    url: 'www.newblog.com'
+  }
+
+  const noUrl = {
+    title: 'this is a new blog',
+    author: 'Villi Wäinö'
+  }
+
+  const blogsInDb = async () => {
+    const blogs = await Blog.find({})
+    return blogs.map(blog => blog.toJSON())
+  }
+
   module.exports = {
     initialBlogs,
     emptyList,
-    listWithOneBlog
+    listWithOneBlog,
+    newBlog,
+    noTitle,
+    noUrl,
+    blogsInDb
   }

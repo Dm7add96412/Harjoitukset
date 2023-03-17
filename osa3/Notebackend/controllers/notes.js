@@ -23,7 +23,7 @@ notesRouter.get('/:id', async (request, response) => {
   if (note) {
     response.json(note)
   } else {
-    response.status(201).json(note)
+    response.status(404).end()
   }
 })
 
