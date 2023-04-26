@@ -1,8 +1,9 @@
-PUT http://localhost:8080/api/notes/63c336409f9f975f54b605e2
+POST http://localhost:8080/api/notes/
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Ikphc2thMkoiLCJpZCI6IjY0MTZmZjc4NmY2MDliMTA0NDc1MmVjOSIsImlhdCI6MTY3OTM0MzgxOH0.nyz9jCdgTFMeL1RuI_Agh2x0hCvqfmU8w5syU9sazH4
 
 {
-    "content": "HTML is fun for sure",
+    "content": "Second note for the same user",
     "important": true
 }
 

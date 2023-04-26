@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
+require('dotenv').config()
 
 const Filter = ({filter, filterChange}) => {
   return(
@@ -104,3 +105,12 @@ function App() {
   )}
 
 export default App;
+
+/* 
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  }, 
+*/
