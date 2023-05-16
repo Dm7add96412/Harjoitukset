@@ -2,7 +2,7 @@ POST http://localhost:8080/api/blogs
 Content-Type: application/json
 
 {
-    "title": "A third test",
+    "title": "A sixth test",
     "author": "Möykkä el Ankka",
     "url": "www.ankat.ankka",
     "userId": "64492ac79ccfb9a2b76c16c4"

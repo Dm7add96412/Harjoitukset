@@ -67,7 +67,8 @@ const initialBlogs = [
   const newBlog = {
     title: 'this is a new blog',
     author: 'Villi Wäinö',
-    url: 'www.newblog.com'
+    url: 'www.newblog.com',
+    userId: '64492ac79ccfb9a2b76c16c6'
   }
 
   const noTitle = {
@@ -83,6 +84,42 @@ const initialBlogs = [
   const blogsInDb = async () => {
     const blogs = await Blog.find({})
     return blogs.map(blog => blog.toJSON())
+  }
+
+  const initialUsers = [
+    {
+      "username": "Juha",
+      "name": "Chucachuca",
+      "password": "123123"
+  },
+  {
+    "username": "Jaajoooo",
+    "name": "ChaChaCha",
+    "password": "321321"
+  },
+  {
+    "username": "Jaajaa",
+    "name": "Jeejeejee",
+    "password": "3453453"
+  }
+  ]
+  
+  const tooShortUsername = {
+    username: 'Ja',
+    password: '543543'
+  }
+
+  const tooShortPassword = {
+    username: 'Jaajaa',
+    password: '54'
+  }
+
+  const noUsername = {
+    password: '543543'
+  }
+
+  const noPassword = {
+    username: 'Jaajaa',
   }
 
   module.exports = {
