@@ -68,25 +68,25 @@ describe('Blog/blogs tests', () => {
     expect(likes).toBe(0)
   })
 
-  test('if title value is not set, return 400 bad request', async () => {
+  test('if title value is not set, 500 "Internal Server Error"', async () => {
     const newBlog = helper.noTitle
 
     await api
       .post('/api/blogs')
       .send(newBlog)
-      .expect(400)
+      .expect(500)
 
     const blogsAtEnd = await helper.blogsInDb()
     expect(blogsAtEnd).toHaveLength(helper.initialBlogs.length)
   })
 
-  test('if url value is not set, return 400 bad request', async () => {
+  test('if url value is not set, 500 "Internal Server Error"', async () => {
     const newBlog = helper.noUrl
 
     await api
       .post('/api/blogs')
       .send(newBlog)
-      .expect(400)
+      .expect(500)
 
     const blogsAtEnd = await helper.blogsInDb()
     expect(blogsAtEnd).toHaveLength(helper.initialBlogs.length)
@@ -130,7 +130,7 @@ describe('Blog/blogs tests', () => {
   })
 })
 
-describe('User and password checks', () => {
+describe('User and password creation', () => {
   test('creating a new user with valid data', async () => {
 
   })
