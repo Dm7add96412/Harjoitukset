@@ -1,4 +1,5 @@
 const Blog = require('../models/blog')
+const User = require('../models/user')
 
 const initialBlogs = [
     {
@@ -103,6 +104,16 @@ const initialBlogs = [
     "password": "3453453"
   }
   ]
+
+  const usersInDb = async () => {
+    const users = await User.find({})
+    return users.map(user => user.toJSON())
+  }
+
+  const validUser = {
+    username: 'Testiuserjuu',
+    password: 'hyvapassu432'
+  }
   
   const tooShortUsername = {
     username: 'Ja',
@@ -129,5 +140,12 @@ const initialBlogs = [
     newBlog,
     noTitle,
     noUrl,
-    blogsInDb
+    blogsInDb,
+    initialUsers,
+    validUser,
+    tooShortUsername,
+    tooShortPassword,
+    noUsername,
+    noPassword,
+    usersInDb
   }

@@ -1,9 +1,10 @@
 POST http://localhost:8080/api/blogs
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Ikp1aGE2NjY2NjYiLCJpZCI6IjY3NjE3MjQ2M2I1ZjMwYjMzNTBkM2VlZSIsImlhdCI6MTczNDUyODI0MywiZXhwIjoxNzM0NTMxODQzfQ.N-yO9fLXIH2Qq3DmJ_DJaLQX-fLFAPduBjxRjrZf3F0
 
 {
-    "title": "testi",
-    "author": "Saapa naha toimiiko",
-    "url": "www.toimiiko.tama",
+    "title": "joojoo",
+    "author": "Voivoi mitä tulee",
+    "url": "www.toimiiko.tamaaaaaaaa",
     "userId": "676172463b5f30b3350d3eee"
 }

@@ -38,11 +38,23 @@ describe('Blog/blogs tests', () => {
   })
 
   test('a new blog can be added', async () => {
+      const loginResponse = await api
+        .post('/api/login')
+        .send({
+            "username": "Juha666666",
+            "password": "443555"
+        })
+        .expect(200)
+        .expect('Content-Type', /application\/json/)
+
+      const token = loginResponse.body.token
+
       const newBlog = helper.newBlog
       console.log(newBlog)
     
       await api
         .post('/api/blogs')
+        .set('Authorization', `Bearer ${token}`)
         .send(newBlog)
         .expect(201)
         .expect('Content-Type', /application\/json/)
@@ -68,25 +80,25 @@ describe('Blog/blogs tests', () => {
     expect(likes).toBe(0)
   })
 
-  test('if title value is not set, 500 "Internal Server Error"', async () => {
+  test('if title value is not set, Blog validation failed: title: Path `title` is required', async () => {
     const newBlog = helper.noTitle
 
     await api
       .post('/api/blogs')
       .send(newBlog)
-      .expect(500)
+      .expect(400)
 
     const blogsAtEnd = await helper.blogsInDb()
     expect(blogsAtEnd).toHaveLength(helper.initialBlogs.length)
   })
 
-  test('if url value is not set, 500 "Internal Server Error"', async () => {
+  test('if url value is not set, Blog validation failed: url: Path `url` is required.', async () => {
     const newBlog = helper.noUrl
 
     await api
       .post('/api/blogs')
       .send(newBlog)
-      .expect(500)
+      .expect(400)
 
     const blogsAtEnd = await helper.blogsInDb()
     expect(blogsAtEnd).toHaveLength(helper.initialBlogs.length)
@@ -131,20 +143,77 @@ describe('Blog/blogs tests', () => {
 })
 
 describe('User and password creation', () => {
+  beforeEach(async () => {
+    await User.deleteMany({})
+    await User.insertMany(helper.initialUsers)
+})
   test('creating a new user with valid data', async () => {
+    const validUser = helper.validUser
 
+    await api
+      .post('/api/users')
+      .send(validUser)
+      .expect(201)
+      .expect('Content-Type', /application\/json/)
+
+    const usersAtEnd = await helper.usersInDb()
+    expect(usersAtEnd).toHaveLength(helper.initialUsers.length + 1)
+  
+    const users = usersAtEnd.map(b => b.username)
+    expect(users).toContain(
+      'Testiuserjuu'
+    )
   })
 
   test('400 error with too short username', async () => {
+    const shortUsername = helper.tooShortUsername
 
+    const check = await api
+      .post('/api/users')
+      .send(shortUsername)
+      .expect(400)
+
+    const usersAtEnd = await helper.usersInDb()
+    expect(usersAtEnd).toHaveLength(helper.initialUsers.length)
+    expect(check.body.error).toContain(
+      'is shorter than the minimum allowed length (3).'
+    )
   })
 
   test('400 error with too short password', async () => {
+    const shortPassword = helper.tooShortPassword
 
+    const check = await api
+      .post('/api/users')
+      .send(shortPassword)
+      .expect(400)
+
+    const usersAtEnd = await helper.usersInDb()
+    expect(usersAtEnd).toHaveLength(helper.initialUsers.length)
+    expect(check.body.error).toContain(
+      'password minimum length 3 letters'
+    )
   })
 
-  test('username must be unique', async () => {
-    
+  test('400 error, username must be unique', async () => {
+    const users = await helper.usersInDb()
+    const username = users[0].username
+
+    const newUser = {
+      username: username,
+      password: 'sagfas4543'
+    }
+
+    const check = await api
+    .post('/api/users')
+    .send(newUser)
+    .expect(400)
+
+    const usersAtEnd = await helper.usersInDb()
+    expect(usersAtEnd).toHaveLength(helper.initialUsers.length)
+    expect(check.body.error).toContain(
+      'User validation failed: username: Error, expected `username` to be unique.'
+    )
   })
 })
 
