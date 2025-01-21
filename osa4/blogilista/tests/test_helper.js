@@ -68,8 +68,7 @@ const initialBlogs = [
   const newBlog = {
     title: 'this is a new blog',
     author: 'Villi Wäinö',
-    url: 'www.newblog.com',
-    userId: '64492ac79ccfb9a2b76c16c6'
+    url: 'www.newblog.com'
   }
 
   const noTitle = {

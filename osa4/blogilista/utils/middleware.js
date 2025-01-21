@@ -44,7 +44,7 @@ const tokenExtractor = (request, response, next) => {
 }
 
 const userExtractor = async (request, response, next) => {
-  console.log('middlewaressa tuleeko token tähän:', request.token)
+ // console.log('middlewaressa tuleeko token tähän:', request.token)
   const token = request.token
   if (!token) {
     return response.status(401).json({error: 'token missing'})

@@ -12,6 +12,14 @@ describe('Blog/blogs tests', () => {
   beforeEach(async () => {
       await Blog.deleteMany({})
       await Blog.insertMany(helper.initialBlogs)
+      await User.deleteMany({})
+      await Promise.all(
+      helper.initialUsers.map(async (user) => {
+        await api.post('/api/users')
+        .send(user)
+        .expect(201)
+        .expect('Content-Type', /application\/json/)
+      }))
   })
 
   test('blogs are returned as json', async () => {
@@ -38,19 +46,21 @@ describe('Blog/blogs tests', () => {
   })
 
   test('a new blog can be added', async () => {
+    console.log('entered new blog test')
+      const users = await api.get('/api/users')
+   //   console.log('userit tässä näin:', users.body)
       const loginResponse = await api
         .post('/api/login')
         .send({
-            "username": "Juha666666",
-            "password": "443555"
+            "username": "Juha",
+            "password": "123123"
         })
         .expect(200)
         .expect('Content-Type', /application\/json/)
 
       const token = loginResponse.body.token
-
       const newBlog = helper.newBlog
-      console.log(newBlog)
+   //   console.log(token)
     
       await api
         .post('/api/blogs')
@@ -147,6 +157,13 @@ describe('User and password creation', () => {
     await User.deleteMany({})
     await User.insertMany(helper.initialUsers)
 })
+
+  test('all users are returned', async () => {
+    const response = await api.get('/api/users')
+
+    expect(response.body).toHaveLength(helper.initialUsers.length)
+  })
+
   test('creating a new user with valid data', async () => {
     const validUser = helper.validUser
 
