@@ -44,7 +44,6 @@ const tokenExtractor = (request, response, next) => {
 }
 
 const userExtractor = async (request, response, next) => {
- // console.log('middlewaressa tuleeko token tähän:', request.token)
   const token = request.token
   if (!token) {
     return response.status(401).json({error: 'token missing'})
@@ -54,6 +53,7 @@ const userExtractor = async (request, response, next) => {
     return response.status(401).json({error: 'token invalid'})
   }
   const user = await User.findById(decodedToken.id)
+  
   if (!user) {
     return response.status(404).json({error: 'cannot find user in database'})
    }
