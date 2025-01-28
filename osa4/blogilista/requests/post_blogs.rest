@@ -1,9 +1,0 @@
-POST http://localhost:8080/api/blogs
-Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Ikp1aGE2NjY2NjYiLCJpZCI6IjY3NjE3MjQ2M2I1ZjMwYjMzNTBkM2VlZSIsImlhdCI6MTczNzk4NjU5MywiZXhwIjoxNzM3OTkwMTkzfQ.2Q5GjBT3DmEQqfUAChm4TPbpjZhixn83MO9bW46ifIc
-
-{
-    "title": "Ei saakeli tätä meinaa saaha toimimaaaaan2",
-    "author": "John the fisherman",
-    "url": "kalastajat.fi"
-}
