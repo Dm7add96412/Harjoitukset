@@ -12,6 +12,7 @@
     "logs:prod": "fly logs",
     "lint": "eslint .",
     "test": "cross-env NODE_ENV=test jest --verbose --runInBand"
+
   },
   "author": "Juha Haipus",
   "license": "ISC",
