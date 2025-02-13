@@ -3,12 +3,11 @@ import Blog from './components/Blog'
 import blogService from './services/blogs'
 import loginService from './services/login'
 import Notification from './components/Notification'
+import BlogForm from './components/BlogForm'
+import Togglable from './components/Togglable'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
-  const [author, setAuthor] = useState('')
-  const [title, setTitle] = useState('')
-  const [url, setUrl] = useState('')
   const [message, setMessage] = useState(null)
   const [newError, setNewError] = useState(false)
   const [username, setUsername] = useState('') 
@@ -28,7 +27,7 @@ const App = () => {
       setUser(user)
       blogService.setToken(user.token)
     }
-  })
+  }, [])
 
   const handleLogin = async (event) => {
     event.preventDefault()
@@ -83,21 +82,12 @@ const App = () => {
     setUser(null)
   }
 
-  const addBlog = (event) => {
-    event.preventDefault()
-      const blogObject = {
-        title: title,
-        author: author,
-        url: url
-      }
+  const addBlog = (blogObject) => {
       blogService
         .create(blogObject)
           .then(returnedBlog => {
             setBlogs(blogs.concat(returnedBlog))
-            setMessage(`A new blog "${title}" by ${author} has been added`)
-            setAuthor('')
-            setTitle('')
-            setUrl('')
+            setMessage(`A new blog "${blogObject.title}" by ${blogObject.author} has been added`)
             setTimeout(() => {
               setMessage(null)
             }, 5000)
@@ -110,50 +100,17 @@ const App = () => {
               setMessage(null)
             }, 5000)
             if (error.response.data.error === 'token expired') {
-              setAuthor('')
-              setTitle('')
-              setUrl('')
               logOut()
             }
           })
   }
 
-  const blogForm = () => (
-    <form onSubmit={addBlog}>
-      <div>
-        Title:
-        <input 
-        type="text" 
-        value={title}
-        onChange={({target}) => setTitle(target.value)}
-        />
-      </div>
-      <div>
-        Author:
-        <input 
-        type="text" 
-        value={author}
-        onChange={({target}) => setAuthor(target.value)}
-        />
-      </div>
-      <div>
-        Url:
-        <input 
-        type="text" 
-        value={url}
-        onChange={({target}) => setUrl(target.value)}
-        />
-      </div>
-      <br />
-      <button type='submit'>Add</button>
-    </form>
-  )
-
   const loggedIn = () =>  (
       <div>
         <p>{user.name} logged in <button onClick={logOut}>Logout</button></p>
-        <h2>Add a new blog</h2>
-        {blogForm()}
+        <Togglable buttonLabel="Add a new blog">
+          <BlogForm createBlog={addBlog}/>
+        </Togglable>
           {blogs.map(blog => (
         <Blog key={blog.id} blog={blog} />
         ))}
