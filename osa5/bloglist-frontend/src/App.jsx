@@ -5,18 +5,17 @@ import loginService from './services/login'
 import Notification from './components/Notification'
 import BlogForm from './components/BlogForm'
 import Togglable from './components/Togglable'
+import LoginForm from './components/LoginForm'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
   const [message, setMessage] = useState(null)
   const [newError, setNewError] = useState(false)
-  const [username, setUsername] = useState('') 
-  const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
 
   useEffect(() => {
     blogService.getAll().then(blogs =>
-      setBlogs( blogs )
+      setBlogs( blogs.sort((a, b) => b.likes - a.likes) )
     )  
   }, [])
 
@@ -29,19 +28,19 @@ const App = () => {
     }
   }, [])
 
-  const handleLogin = async (event) => {
-    event.preventDefault()
+  const handleLogin = async (loginUser) => {
+    const username = loginUser.username
+    const password = loginUser.password
+
     try {
       const user = await loginService.login({
-        username, password
+        username: username, password: password
       })
       window.localStorage.setItem(
         'loggedUser', JSON.stringify(user)
       )
       blogService.setToken(user.token)
       setUser(user)
-      setUsername('')
-      setPassword('')
     } catch (exception) {
       setNewError(true)
       setMessage('Wrong credentials')
@@ -51,31 +50,6 @@ const App = () => {
       }, 5000)
     }
   }
-
-  const loginForm = () => (
-    <form onSubmit={handleLogin}>
-      <div>
-        username: 
-        <input 
-        type="text"
-        value={username}
-        name="Username"
-        onChange={({target}) => setUsername(target.value)}
-        />
-      </div>
-      <div>
-        password: 
-        <input 
-        type="password"
-        value={password}
-        name="Password"
-        onChange={({target}) => setPassword(target.value)}
-        />
-      </div>
-      <br></br>
-      <button type='submit'>login</button>
-    </form>
-  )
 
   const logOut = () => {
     window.localStorage.removeItem('loggedUser')
@@ -105,14 +79,33 @@ const App = () => {
           })
   }
 
+  const updateBlog = (id) => {
+    const blog = blogs.find(b => b.id === id)
+    const changedBlog = {...blog, likes: blog.likes + 1}
+
+    blogService
+      .update(id, changedBlog)
+        .then(returnedBlog => {
+          setBlogs(blogs.map(blog => blog.id !== id ? blog : returnedBlog))
+        })
+        .catch(error => {
+          setNewError(true)
+          setMessage(error.response.data.error)
+          setTimeout(() => {
+            setNewError(false)
+            setMessage(null)
+          }, 5000)
+        })
+  }
+
   const loggedIn = () =>  (
       <div>
         <p>{user.name} logged in <button onClick={logOut}>Logout</button></p>
         <Togglable buttonLabel="Add a new blog">
           <BlogForm createBlog={addBlog}/>
         </Togglable>
-          {blogs.map(blog => (
-        <Blog key={blog.id} blog={blog} />
+        {blogs.map(blog => (
+            <Blog key={blog.id} blog={blog} updateLikes={() => updateBlog(blog.id)}/>
         ))}
       </div>
   )
@@ -121,7 +114,7 @@ const App = () => {
     <div>
       {user ? <h1>Blogs</h1> : <h1>Log in to application</h1>}
       <Notification message={message} error={newError}/>
-      {user ? loggedIn() : loginForm()}
+      {user ? loggedIn() : <LoginForm loginUser={handleLogin}/>}
 
     </div>
   )
