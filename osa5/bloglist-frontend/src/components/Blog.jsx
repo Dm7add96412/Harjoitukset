@@ -1,6 +1,6 @@
 import { useState } from "react"
 
-const Blog = ({ blog, updateLikes }) => {
+const Blog = ({ blog, updateLikes, removeBlog, user }) => {
   const [visible, setVisible] = useState(false)
   const [buttonLabel, setButtonLabel] = useState('view')
 
@@ -12,6 +12,12 @@ const Blog = ({ blog, updateLikes }) => {
     borderWidth: 1,
     marginBottom: 5}
 
+  const showRemove = {
+    display: blog.user.username === user.username ? '' : 'none'
+  }
+
+//  console.log(blog)
+ 
   const toggleVisibility = () => {
     setVisible(!visible)
     if (buttonLabel === 'view') {
@@ -24,7 +30,7 @@ const Blog = ({ blog, updateLikes }) => {
   return (
     <div>
       <div>
-        {blog.title} <button onClick={toggleVisibility}> {buttonLabel} </button>  
+        {blog.title} / <b>{blog.author}</b> <button onClick={toggleVisibility}> {buttonLabel} </button>  
       </div>
       <div style={showWhenVisible}>
         <div>
@@ -36,12 +42,14 @@ const Blog = ({ blog, updateLikes }) => {
           likes {blog.likes} <button onClick={updateLikes}>like</button>
         </div>
         <div>
-          {blog.author}
+          {blog.user.username}
+        </div>
+        <div style={showRemove}>
+          <button onClick={removeBlog}> remove </button>
         </div>
       </div>
   </div>  
   )
-
 }
 
 export default Blog
