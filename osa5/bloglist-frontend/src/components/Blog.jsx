@@ -27,11 +27,14 @@ const Blog = ({ blog, updateLikes, removeBlog, user }) => {
   }
 
   return (
-    <div>
+    <div className='blog'>
       <div>
-        {blog.title} / <b>{blog.author}</b> <button onClick={toggleVisibility}> {buttonLabel} </button>
+        {blog.title} <button onClick={toggleVisibility}> {buttonLabel} </button>
       </div>
-      <div style={showWhenVisible}>
+      <div style={showWhenVisible} className='hiddenContent'>
+        <div>
+          <b>{blog.author}</b>
+        </div>
         <div>
           <a href={blog.url} target="_blank" rel="noopener noreferrer">
             {blog.url}
