@@ -3,3 +3,9 @@ dist
 .eslintrc.cjs
 vite.config.js
 build
+
+**/__tests__/
+**/*.test.js
+**/*.test.jsx
+**/*.spec.js
+**/*.spec.jsx
