@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "axios": "^1.2.0",
+    "http-proxy-middleware": "^3.0.3",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -28,7 +29,10 @@
     "collectCoverageFrom": [
       "src/**/*.{js,jsx}"
     ],
-    "coverageReporters": ["html", "text"]
+    "coverageReporters": [
+      "html",
+      "text"
+    ]
   },
   "proxy": "http://localhost:8080",
   "eslintConfig": {

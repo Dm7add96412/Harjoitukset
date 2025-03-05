@@ -93,7 +93,7 @@ const App = () => {
 
       <Notification message={errorMessage} />
 
-      {!user && <Togglable buttonLabel="Login">
+      {!user && <Togglable buttonLabel="Log in">
         <LoginForm loginUser={handleLogin}/>
       </Togglable>}
       {user && <div>
