@@ -124,20 +124,22 @@ const App = () => {
 
   const loggedIn = () =>  (
     <div>
-      <p>{user.username} logged in <button onClick={logOut}>Logout</button></p>
+      <p>{user.name} logged in <button onClick={logOut}>Logout</button></p>
       <Togglable buttonLabel="Add a new blog">
         <BlogForm createBlog={addBlog}/>
       </Togglable>
       <br/>
-      {blogs.map(blog => (
-        <Blog key={blog.id} blog={blog} updateLikes={() => updateBlog(blog.id)} removeBlog={() => deleteBlog(blog.id)} user={user} />
-      ))}
+      <div className='blogs'>
+        {blogs.map(blog => (
+          <Blog key={blog.id} blog={blog} updateLikes={() => updateBlog(blog.id)} removeBlog={() => deleteBlog(blog.id)} user={user} />
+        ))}
+      </div>
     </div>
   )
 
   return (
     <div>
-      {user ? <h1>Blogs</h1> : <h1>Log in to application</h1>}
+      {user && <h1>Blogs</h1>}
       <Notification message={message} error={newError}/>
       {user ? loggedIn() : <LoginForm loginUser={handleLogin}/>}
 
